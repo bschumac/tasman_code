@@ -11,14 +11,14 @@ Created on Sun Aug  9 19:51:14 2020
 
 from TST_fun import *
 import os
-experiment = "TAS1"
+experiment = "TAS2"
 
 import pandas as pd
+import time
 
+datapath = "/media/benjamin/Seagate_Drive1/TAS2/csv_TAS2/" 
 
-datapath = "/mnt/Seagate_Drive1/TAS1/csv_TAS1/TAS1/" 
-
-outpath = "/mnt/Seagate_Drive1/TAS1/csv_min_mean/"
+outpath = "/media/benjamin/Seagate_Drive1/TAS2/csv_min_mean/"
 
 
 fld = os.listdir(datapath)
@@ -46,7 +46,7 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
         #my_data = np.genfromtxt(datapath_csv_files+fls[i], delimiter=',', skip_header=1)
         #my_data = np.reshape(my_data,(1,my_data.shape[0],my_data.shape[1]))
         try:
-            df = pd.read_csv(datapath_csv_files+fls[i],skiprows=1)
+            df = pd.read_csv(datapath_csv_files+fls[i],skiprows=1, delimiter=",", decimal=",")
             my_data = df.values
             my_data = np.reshape(my_data,(1,my_data.shape[0],my_data.shape[1]))
             if counter == 0:
@@ -66,14 +66,19 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
 
 
 
-for j in range(10,27):
+for j in range(0,23):
+   
     fls = os.listdir(datapath+fld[j]+"/")
-    
-    for i in range(0, len(fls), 1620):
-        
-        #if i == 1620:      
-        #    end = time.time()
-        #    print(end - start) 
+    start = time.time()
+    if j == 0:
+        start_for = 8100
+    else:
+        start_for = 0
+    for i in range(start_for, len(fls), 1620):
+       
+        if i == 1620:      
+            end = time.time()
+            print(end - start) 
         print(i)
         follow_i = i+1620
         if follow_i > len(fls):
@@ -84,7 +89,7 @@ for j in range(10,27):
         arr_steady = removeSteadyImages(tas1_arr, rec_feq = 27, print_out = True)
     
     
-        avg = np.nanmean(arr_steady,(0))
+        avg = np.nanmean(arr_steady,axis=(0))
         np.savetxt(outpath+str(j)+"_"+str(i)+".csv", avg, delimiter=",")
     
 
