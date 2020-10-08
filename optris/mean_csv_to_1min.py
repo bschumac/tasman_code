@@ -66,12 +66,12 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
 
 
 
-for j in range(0,23):
+for j in range(2,23):
    
     fls = os.listdir(datapath+fld[j]+"/")
     start = time.time()
-    if j == 0:
-        start_for = 8100
+    if j == 2:
+        start_for = 72900
     else:
         start_for = 0
     for i in range(start_for, len(fls), 1620):
