@@ -1,10 +1,10 @@
 
 
 
-fls <- list.files("C:/PhD/Tasman_OP/smooth_converted/", pattern = "irg", full.names = T)
+fls <- list.files("C:/PhD/Tasman_OP/rough_converted/", pattern = "irg", full.names = T)
 
-
-
+library(gtools)
+fls <- mixedsort(fls)
 
 merged_df <- read.csv(fls[1], skip = 1)
 merged_df <- merged_df[3:nrow(merged_df),]

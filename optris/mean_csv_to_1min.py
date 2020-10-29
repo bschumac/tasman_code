@@ -9,16 +9,16 @@ Created on Sun Aug  9 19:51:14 2020
 
 
 
-from TST_fun import *
+from TST_fun import writeNetCDF
 import os
 experiment = "TAS2"
-
+import numpy as np
 import pandas as pd
 import time
+import copy
+#datapath = "/media/benjamin/Seagate_Drive1/TAS2/csv_TAS2/" 
 
-datapath = "/media/benjamin/Seagate_Drive1/TAS2/csv_TAS2/" 
-
-outpath = "/media/benjamin/Seagate_Drive1/TAS2/csv_min_mean/"
+outpath = "D:/TAS2/csv_min_mean/"
 
 
 fld = os.listdir(datapath)
@@ -41,7 +41,8 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
     counter = 0
     
     for i in range(start_img,end_img, interval): 
-        if counter%100 == 0:
+        
+        if counter%10 == 0:
             print(str(counter)+" of "+str((end_img-start_img)/interval))
         #my_data = np.genfromtxt(datapath_csv_files+fls[i], delimiter=',', skip_header=1)
         #my_data = np.reshape(my_data,(1,my_data.shape[0],my_data.shape[1]))
@@ -54,7 +55,8 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
             else:
                 org_data = np.append(org_data,my_data,0)
             #org_data[counter] = my_data
-        except:
+        except  Exception as e:
+            print(e)
             pass
         counter+=1
     
@@ -99,8 +101,26 @@ fls = sorted(fls, key = lambda x: (int(x.split('.', 1)[0].split('_',1)[0]), int(
 
 
 
-minTAS1 = readcsvtoarr2(outpath, fls = fls)
+minTAS1 = readcsvtoarr2(outpath, fls = fls, start_img=750,end_img=0)
 minTAS1 = np.fliplr(minTAS1)
 
-writeNetCDF(outpath, "min_mean_TAS1.nc", "Tb", minTAS1)
+fls[1060]
 
+writeNetCDF(outpath, "min_mean_TAS1_2.nc", "Tb", minTAS1)
+
+
+def readnetcdftoarr(datapath_to_file, var = 'Tb'):
+    file = h5py.File(datapath_to_file,'r')
+    arr = file.get(var)
+    nparr = np.array(arr)
+    return(nparr)
+
+Tas2_1 = readnetcdftoarr(outpath+"min_mean_TAS1_1.nc")
+Tas2_2 = readnetcdftoarr(outpath+"min_mean_TAS1_2.nc")
+
+
+Tas2_1.shape
+Tas2_2.shape
+
+Tas2 = np.concatenate([Tas2_1, Tas2_2], 0)
+writeNetCDF(outpath, "min_mean_TAS2.nc", "Tb", Tas2)
