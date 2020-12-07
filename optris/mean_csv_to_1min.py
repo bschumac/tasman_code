@@ -9,7 +9,7 @@ Created on Sun Aug  9 19:51:14 2020
 
 
 
-from TST_fun import writeNetCDF
+#from TST_fun import writeNetCDF
 import os
 experiment = "TAS2"
 import numpy as np
@@ -41,7 +41,7 @@ def readcsvtoarr2(datapath_csv_files,start_img=0,end_img=0,interval=1, fls = [])
     counter = 0
     
     for i in range(start_img,end_img, interval): 
-        
+        i = 0
         if counter%10 == 0:
             print(str(counter)+" of "+str((end_img-start_img)/interval))
         #my_data = np.genfromtxt(datapath_csv_files+fls[i], delimiter=',', skip_header=1)
@@ -94,19 +94,21 @@ for j in range(2,23):
         avg = np.nanmean(arr_steady,axis=(0))
         np.savetxt(outpath+str(j)+"_"+str(i)+".csv", avg, delimiter=",")
     
-
+import os
 fls = os.listdir(outpath)
 fls = [i for i in fls if i.endswith('.csv')]
 fls = sorted(fls, key = lambda x: (int(x.split('.', 1)[0].split('_',1)[0]), int(x.rsplit('_', 1)[1].split('.',1)[0])))
 
 
 
-minTAS1 = readcsvtoarr2(outpath, fls = fls, start_img=750,end_img=0)
+minTAS1 = readcsvtoarr2(outpath, fls = fls, start_img=0,end_img=0)
 minTAS1 = np.fliplr(minTAS1)
 
 fls[1060]
 
-writeNetCDF(outpath, "min_mean_TAS1_2.nc", "Tb", minTAS1)
+outpath = "D:/TAS1/csv_min_mean_restart/"
+
+writeNetCDF(outpath, "min_mean_TAS1_restart.nc", "Tb", minTAS1)
 
 
 def readnetcdftoarr(datapath_to_file, var = 'Tb'):
