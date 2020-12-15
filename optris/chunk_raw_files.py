@@ -4,6 +4,8 @@
 Created on Thu Jul 16 17:31:01 2020
 
 @author: benjamin
+
+Chunking of 1 GB .raw files from OPTRIS Camera 
 """
 
 
@@ -14,6 +16,7 @@ fls = os.listdir(datapath)
 
 start = "w."
 #end = ".raw"
+#Sorting files:
 fls = sorted(fls, key = lambda x: float(x[x.rfind(start)+len(start):len(x)]))
 
 
@@ -23,11 +26,12 @@ fls = sorted(fls, key = lambda x: float(x[x.rfind(start)+len(start):len(x)]))
 
 for i in range(0,len(fls),20):
     print(i)
+    # create directories
     os.makedirs(datapath+str(i//20))
     
     try:
         for j in range(i,i+20):
-        
+            # rename files and move into correct folders
             if j == 0:
                 
                 original_name = fls[j]

@@ -5,7 +5,12 @@ Created on Thu May 21 13:50:35 2020
 
 @author: Benjamin Schumacher
 
-Example file for correction of sonic anemometer data
+Correct Sonic anemometer data using the planar fit algorithm of:
+    https://github.com/bschumac/sonicfun
+    
+Before using this File, download the sonicfun package to make the tilt algorithm available. 
+Run with Sonicfun as working directory
+A example file is available with the sonicfun package as well. Therefore no detailed documentation here.
 
 
 """

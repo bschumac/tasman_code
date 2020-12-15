@@ -3,6 +3,11 @@
 Created on Mon Oct  5 20:57:25 2020
 
 @author: benjamin.schumacher
+
+Calculation of Heatflux/H2O Flux from EC data. 
+Defenition of Heatflux can be found in Stull 1988 - covariance of w*T - 
+
+
 """
 
 
