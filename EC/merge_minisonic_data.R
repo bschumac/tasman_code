@@ -1,5 +1,5 @@
 # Rough or smooth
-prefix <- "smooth"
+prefix <- "Rough"
 
 
 fls <- list.files(paste0("C:/PhD/Tasman_OP/",prefix,"_converted/"), pattern = "minisonic", full.names = T)
