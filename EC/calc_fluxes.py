@@ -47,6 +47,7 @@ example_file = os.path.join(wd_path, "smooth_cleaned_planarfit.csv")
 # read the data from the file
 irg_rough = pd.read_csv(example_file, header=[0,1], na_values='NAN')
 
+# creating timestamps to aggregate data 
 start_time = irg_rough['TIMESTAMP'].values[0][0]
 end_time = irg_rough["TIMESTAMP"].values[len(irg_rough["TIMESTAMP"].values)-1][0]
 
@@ -55,9 +56,6 @@ irg_rough['TIMESTAMP']= pd.to_datetime(irg_rough['TIMESTAMP'].stack(),format='%Y
 
 irg_rough = irg_rough.set_index(pd.DatetimeIndex(irg_rough['TIMESTAMP'].values[:].flatten()))
 
-
-
-
 d0 = datetime.datetime.strptime(start_time, '%Y-%m-%d %H:%M:%S')
 d1= datetime.datetime.strptime(end_time, '%Y-%m-%d %H:%M:%S')
 secSteps = 60*60
@@ -65,7 +63,7 @@ dt = datetime.timedelta(seconds = secSteps)
 dates = np.arange(d0, d1, dt).astype(datetime.datetime)
 
 
-
+#  empty lists for saving aggregated data
 heat_flux = []
 date_lst = []
 air_temp = []
