@@ -3,7 +3,7 @@
 # Relative Path variables - find the data used in /shared_Tasman_03_2020/Ben/EC/Tier00/
 # These are the to TOA5 converted files from the TasmanOp 2020
 
-prefix <- "smooth"
+prefix <- "rough"
 data_path <- "C:/PhD/Tasman_OP/"
 
 fls <- list.files(paste0(data_path,prefix,"_converted/"), pattern = "irg", full.names = T)
@@ -74,7 +74,7 @@ merged_df_rough <- merged_df_rough[complete.cases(merged_df_rough),]
 # string from time and write csv
 merged_df_rough$TIMESTAMP_UTC <- strptime(merged_df_rough$TIMESTAMP_UTC, format = "%d%m%y %H%M%S", tz="GMT")
 
-write.csv(merged_df_rough,"C:/PhD/Tasman_OP/rough_cleaned.csv")
+write.csv(merged_df_rough,paste0("C:/PhD/Tasman_OP/",prefix,"_cleaned.csv"))
 
 
 
